@@ -59,6 +59,24 @@ h1 {
   <h1>Applications</h1>
   <div id="appList">Loading...</div>
 
+
+  <script>
+  // Set your secret access code here
+  const ACCESS_CODE = "snapchatadmincode";
+
+  // Get the URL search params
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+
+  if (code !== ACCESS_CODE) {
+    alert("Access denied. Invalid or missing access code.");
+    // Redirect away (to home page or elsewhere)
+    window.location.href = "application.html"; // or any other safe page
+  }
+</script>
+
+
+
   <script>
     const api = "https://application-backend-225i.onrender.com"; // Same Render URL
 
