@@ -1,27 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8" />
     <title>Admin Panel</title>
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             padding: 20px;
             background: #222;
             color: white;
-        }
-
-        h1 {
-            font-weight: 700;
-            color: #fffc00;
-            /* Snapchat yellow accent */
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        #appList {
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .app {
@@ -29,71 +17,70 @@
             padding: 15px;
             margin: 10px 0;
             border-left: 5px solid #007BFF;
+            border-radius: 5px;
         }
 
         .app h3 {
-            margin: 0;
+            margin: 0 0 10px;
+            color: #fff;
         }
 
         .app p {
             margin: 5px 0;
+            color: #ccc;
         }
 
-        .app small {
-            display: block;
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: #999;
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fffc00;
         }
     </style>
 </head>
 
 <body>
-    <h1>Applications</h1>
+
+    <h1>Admin Panel - Applications</h1>
     <div id="appList">Loading...</div>
 
-
     <script>
-        // Set your secret access code here
-        const ACCESS_CODE = "snapchatadmincode";
+        const apiUrl = "https://application-backend-225i.onrender.com/api/applications";
+        const appList = document.getElementById("appList");
 
-        // Get the URL search params
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+        async function loadApplications() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error("Failed to fetch");
 
-        if (code !== ACCESS_CODE) {
-            alert("Access denied. Invalid or missing access code.");
-            // Redirect away (to home page or elsewhere)
-            window.location.href = "application.html"; // or any other safe page
-        }
-    </script>
+                const apps = await response.json();
 
+                if (apps.length === 0) {
+                    appList.innerHTML = "<p>No applications found.</p>";
+                    return;
+                }
 
+                appList.innerHTML = ""; // clear "Loading..."
 
-    <script>
-        const api = "https://application-backend-225i.onrender.com"; // Same Render URL
-
-        async function loadApps() {
-            const res = await fetch(`${api}/api/applications`);
-            const apps = await res.json();
-            const list = document.getElementById("appList");
-            list.innerHTML = "";
-
-            apps.forEach(app => {
-                list.innerHTML += `
-          <div>
+                apps.forEach(app => {
+                    const div = document.createElement("div");
+                    div.className = "app";
+                    div.innerHTML = `
             <h3>${app.name}</h3>
-            <p>Email: ${app.email}</p>
-            <p>${app.message}</p>
-            <small>${new Date(app.submittedAt).toLocaleString()}</small>
-            <hr>
-          </div>
-        `;
-            });
+            <p><strong>Email:</strong> ${app.email}</p>
+            <p><strong>Message:</strong> ${app.message}</p>
+            <p><em>Submitted: ${new Date(app.submittedAt).toLocaleString()}</em></p>
+          `;
+                    appList.appendChild(div);
+                });
+            } catch (err) {
+                appList.innerHTML = "<p style='color: red;'>Failed to load applications.</p>";
+                console.error(err);
+            }
         }
 
-        loadApps();
+        loadApplications();
     </script>
+
 </body>
 
 </html>
