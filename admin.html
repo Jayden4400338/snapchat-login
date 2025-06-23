@@ -6,7 +6,7 @@
     <title>Admin Panel</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             padding: 20px;
             background: #222;
             color: white;
@@ -17,23 +17,19 @@
             padding: 15px;
             margin: 10px 0;
             border-left: 5px solid #007BFF;
-            border-radius: 5px;
         }
 
         .app h3 {
-            margin: 0 0 10px;
-            color: #fff;
+            margin: 0;
         }
 
         .app p {
             margin: 5px 0;
-            color: #ccc;
         }
 
         h1 {
-            text-align: center;
-            margin-bottom: 30px;
             color: #fffc00;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -44,13 +40,22 @@
     <div id="appList">Loading...</div>
 
     <script>
-        const apiUrl = "https://application-backend-225i.onrender.com/api/applications";
+        const ACCESS_CODE = "supersecret123"; // Your secret access code here
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
+
+        if (code !== ACCESS_CODE) {
+            document.body.innerHTML = "<h2 style='color: red; text-align:center; margin-top: 50px;'>Access denied. Invalid or missing access code.</h2>";
+            throw new Error("Access denied");
+        }
+
         const appList = document.getElementById("appList");
+        const apiUrl = "https://application-backend-225i.onrender.com/api/applications";
 
         async function loadApplications() {
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error("Failed to fetch");
+                if (!response.ok) throw new Error("Failed to fetch applications");
 
                 const apps = await response.json();
 
@@ -72,9 +77,10 @@
           `;
                     appList.appendChild(div);
                 });
-            } catch (err) {
+
+            } catch (error) {
                 appList.innerHTML = "<p style='color: red;'>Failed to load applications.</p>";
-                console.error(err);
+                console.error(error);
             }
         }
 

