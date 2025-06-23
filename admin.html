@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <style>
+    body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212;
+  color: #e0e0e0;
+  padding: 30px;
+  margin: 0;
+}
+
+h1 {
+  font-weight: 700;
+  color: #fffc00; /* Snapchat yellow accent */
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#appList {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.app {
+  background: #1e1e1e;
+  padding: 20px 25px;
+  margin-bottom: 15px;
+  border-left: 8px solid #fffc00;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.app h3 {
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.app p {
+  margin: 6px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #ccc;
+}
+
+.app small {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Applications</h1>
+  <div id="appList">Loading...</div>
+
+  <script>
+    const api = "https://application-backend-225i.onrender.com"; // Same Render URL
+
+    async function loadApps() {
+      const res = await fetch(`${api}/api/applications`);
+      const apps = await res.json();
+      const list = document.getElementById("appList");
+      list.innerHTML = "";
+
+      apps.forEach(app => {
+        list.innerHTML += `
+          <div>
+            <h3>${app.name}</h3>
+            <p>Email: ${app.email}</p>
+            <p>Message: ${app.message}</p>
+            <small>${new Date(app.submittedAt).toLocaleString()}</small>
+            <hr>
+          </div>
+        `;
+      });
+    }
+
+    loadApps();
+  </script>
+</body>
+</html>
